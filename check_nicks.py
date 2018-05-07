@@ -2,7 +2,7 @@ import sqlite3
 import requests
 import time
 
-dataBasesql="D:\\bot\\instaSQL.db"
+dataBasesql="instaSQL.db"
 
 url=""
 
