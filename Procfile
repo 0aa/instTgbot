@@ -1,1 +1,1 @@
-web: python instTgbot.py
+worker: python instTgbot.py
