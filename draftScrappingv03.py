@@ -40,7 +40,7 @@ def txt_to_list():
 def parce(link,user_ag):  #принимаем ссылку на аккаунт и юзер-агеннт
     while True:    
         try:
-            html = requests.get(link,
+            html = requests.get('{}:4028'format.link,
                                 data=None, 
                                 headers={'User-Agent':user_ag}) #переходим на один пост по ссылке link (одной из 12)
             break
