@@ -1,1 +1,1 @@
-web: instTgbot
+web: python instTgbot.py
