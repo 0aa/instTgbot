@@ -11,10 +11,10 @@ import random
 import sqlite3
 
 css_selector="div._6d3hm a" #задаем div.класс для поиска в css на странице инстаграма
-linksBasePath="D:\\bot\\geeks.txt" #документ со ссылками на нужные аккаунты 
-resultsBasePath="D:\\bot\\results.txt" # документ для вывода  информации
-uaList="D:\\bot\\User-agents.txt" #список юзер-агентов
-dataBasesql="D:\\bot\\instaSQL.db"
+linksBasePath="geeks.txt" #документ со ссылками на нужные аккаунты 
+resultsBasePath="results.txt" # документ для вывода  информации
+uaList="User-agents.txt" #список юзер-агентов
+dataBasesql="instaSQL.db"
 
 
 # In[18]:
