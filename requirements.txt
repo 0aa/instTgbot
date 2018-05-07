@@ -1,3 +1,4 @@
+python==3.6.4
 async-timeout==2.0.1
 attrs==18.1.0
 babel==2.5.0
