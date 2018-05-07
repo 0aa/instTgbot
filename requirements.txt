@@ -4,4 +4,4 @@ attrs==18.1.0
 babel==2.5.0
 backports.shutil-get-terminal-size==1.0.0
 beautifulsoup4==4.6.0
-json
+jsonschema==2.6.0
