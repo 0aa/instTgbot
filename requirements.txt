@@ -7,3 +7,8 @@ jsonschema==2.6.0
 requests==2.18.4
 requests-credssp==1.0.0
 SQLAlchemy==1.1.13
+alembic
+Flask-Migrate
+Flask-Script
+Flask-SQLAlchemy
+psycopg2
