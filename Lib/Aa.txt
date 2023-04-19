@@ -1,0 +1,71 @@
+from azure.devops.connection import Connection
+from azure.devops.v6_0.work_item_tracking.models import Wiql
+from msrest.authentication import BasicAuthentication
+import os
+
+# Replace with your Azure DevOps Organization URL, Personal Access Token, and project name
+organization_url = 'https://dev.azure.com/YourOrganization'
+personal_access_token = 'your-personal-access-token'
+project_name = 'YourProject'
+user_story_id = 1234  # Replace with your user story ID
+
+# Authenticate with Azure DevOps
+credentials = BasicAuthentication('', personal_access_token)
+connection = Connection(base_url=organization_url, creds=credentials)
+wit_client = connection.clients.get_work_item_tracking_client()
+
+# Get the user story
+user_story = wit_client.get_work_item(user_story_id)
+
+# Parse the user story to generate test case steps
+def parse_user_story(user_story):
+    # Implement your own logic to parse user story text and generate test case steps
+    # You can use the user_story object to access fields like user_story.fields['System.Title']
+    return [
+        {"step": "Step 1", "result": "Expected Result 1"},
+        {"step": "Step 2", "result": "Expected Result 2"},
+    ]
+
+steps = parse_user_story(user_story)
+
+# Create the test case with the parsed steps
+test_case = {
+    "op": "add",
+    "path": "/fields/System.Title",
+    "value": f"Test Case for User Story {user_story_id}",
+}
+test_case_steps = {
+    "op": "add",
+    "path": "/fields/Microsoft.VSTS.TCM.Steps",
+    "value": "<steps>{}</steps>".format(
+        "".join(
+            f'<step id="{i}" type="ValidateStep"><parameter name="Step">{step["step"]}</parameter><parameter name="ExpectedResult">{step["result"]}</parameter></step>'
+            for i, step in enumerate(steps, start=1)
+        )
+    ),
+}
+
+# Create the test case work item
+created_test_case = wit_client.create_work_item(
+    [test_case, test_case_steps],
+    project_name,
+    "Test Case",
+)
+
+# Link the test case to the user story
+link_test_case = {
+    "op": "add",
+    "path": "/relations/-",
+    "value": {
+        "rel": "Microsoft.VSTS.Common.TestedBy-Forward",
+        "url": created_test_case.url,
+        "attributes": {
+            "comment": "Automatically generated test case from user story",
+        },
+    },
+}
+
+# Update the user story to include the linked test case
+wit_client.update_work_item([link_test_case], user_story_id)
+
+print(f"Test case {created_test_case.id} created and linked to user story {user_story_id}")
